@@ -16,7 +16,7 @@ function App() {
         <Container>
           <Routes>
             <Route path="/" element={<UsersList />} />
-            <Route path="/" element={<UserDetails />} />
+            <Route path="/:username" element={<UserDetails />} />
           </Routes>
         </Container>
       </main>
