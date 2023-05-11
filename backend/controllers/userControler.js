@@ -1,5 +1,7 @@
 const axios = require("axios");
 const { parseLinkHeader } = require("../utils/pagination");
+require("dotenv").config();
+const token = process.env.TOKEN;
 
 // Controller for listing users
 const getUsers = async (req, res) => {
@@ -8,10 +10,14 @@ const getUsers = async (req, res) => {
     const perPage = 10;
 
     const response = await axios.get(
-      `https://api.github.com/users?since=${since}&per_page=${perPage}`
+      `https://api.github.com/users?since=${since}&per_page=${perPage}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
 
-    console.log(response.headers);
     const linkHeader = response.headers.link;
     const parsedLinks = parseLinkHeader(linkHeader);
 
