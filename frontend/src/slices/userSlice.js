@@ -36,19 +36,19 @@ export const getUserProfileDetails = createAsyncThunk(
   }
 );
 
-//  get userProfile Details
-export const getUserProfileRepos = createAsyncThunk(
-  "user/details",
-  async (username, thunkAPI) => {
-    const data = await userService.getUserProfileRepos(username);
+// //  get userProfile Details
+// export const getUserProfileRepos = createAsyncThunk(
+//   "user/details",
+//   async (username, thunkAPI) => {
+//     const data = await userService.getUserProfileRepos(username);
 
-    if (data.data) {
-      return thunkAPI.fulfillWithValue(data.data);
-    } else {
-      return thunkAPI.rejectWithValue(data.response.data.error);
-    }
-  }
-);
+//     if (data.data) {
+//       return thunkAPI.fulfillWithValue(data.data);
+//     } else {
+//       return thunkAPI.rejectWithValue(data.response.data.error);
+//     }
+//   }
+// );
 
 export const userSlice = createSlice({
   name: "users",
