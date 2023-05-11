@@ -27,13 +27,11 @@ export const getUserProfileDetails = createAsyncThunk(
   "user/details",
   async (username, thunkAPI) => {
     const data = await userService.getUserProfileDetails(username);
-    console.log(data);
 
     if (data.data) {
       return thunkAPI.fulfillWithValue(data.data);
     } else {
-      const message = data;
-      return thunkAPI.rejectWithValue(message);
+      return thunkAPI.rejectWithValue(data.response.data.error);
     }
   }
 );
@@ -46,12 +44,11 @@ export const userSlice = createSlice({
     builder
       .addCase(getUsers.pending, (state) => {
         state.loading = true;
-        state.error = null;
+        state.error = false;
       })
       .addCase(getUsers.fulfilled, (state, action) => {
         state.loading = false;
         state.data = action.payload;
-        console.log(action.payload);
       })
       .addCase(getUsers.rejected, (state, action) => {
         state.loading = false;
@@ -64,7 +61,7 @@ export const userSlice = createSlice({
       .addCase(getUserProfileDetails.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
-        state.error = null;
+        state.error = false;
         state.user = action.payload;
       })
       .addCase(getUserProfileDetails.rejected, (state, action) => {

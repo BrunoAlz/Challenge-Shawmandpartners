@@ -7,7 +7,7 @@ const getUsers = async () => {
     const response = await axios.get(endpoint);
     return response;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
 
@@ -15,10 +15,10 @@ const getUsers = async () => {
 const getUserProfileDetails = async (username) => {
   try {
     const response = await axios.get(`${endpoint}/${username}/details`);
-    console.log(response);
+    console.log(response.data);
     return response;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
 
