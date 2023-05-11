@@ -1,4 +1,4 @@
-function DateComponent({ date }) {
+const DateComponent = ({ date }) => {
   const formattedDate = new Date(date).toLocaleDateString("en-US", {
     year: "numeric",
     month: "2-digit",

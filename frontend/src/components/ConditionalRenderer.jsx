@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import DateComponent from "./DateComponent";
 
-function ConditionalRenderer({ loading, error, user }) {
+const ConditionalRenderer = ({ loading, error, user }) => {
   if (loading) {
     return <h1>Loading...</h1>;
   }
@@ -43,6 +43,6 @@ function ConditionalRenderer({ loading, error, user }) {
       </Link>
     </>
   );
-}
+};
 
 export default ConditionalRenderer;
