@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-// Controller para a listagem de usuários
+// Controller for listing users
 const getUsers = async (req, res) => {
   try {
     const { since } = req.query;
@@ -16,6 +16,24 @@ const getUsers = async (req, res) => {
   }
 };
 
+// Controller for user details
+const getUserDetail = async (req, res) => {
+  try {
+    const { username } = req.params;
+
+    const response = await axios.get(
+      `https://api.github.com/users/${username}`
+    );
+
+    res.json(response.data);
+    console.log(response)
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({ error: "Error user does not exist" });
+  }
+};
+
 module.exports = {
   getUsers,
+  getUserDetail,
 };
