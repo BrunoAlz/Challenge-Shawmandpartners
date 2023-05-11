@@ -2,12 +2,10 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import UsersList from "./pages/UsersList";
-import Header from "./components/Header"
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 import { Container } from "react-bootstrap";
-
-
-
 
 function App() {
   return (
@@ -20,6 +18,7 @@ function App() {
           </Routes>
         </Container>
       </main>
+      <Footer />
     </BrowserRouter>
   );
 }

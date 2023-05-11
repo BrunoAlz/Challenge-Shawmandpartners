@@ -6,8 +6,8 @@ const Header = () => {
     <header>
       <Navbar bg="light" expand="lg" collapseOnSelect>
         <Container fluid>
-            <Navbar.Brand>
-              <i className="fas fa-basket-shopping"></i> GITHUB USERS
+            <Navbar.Brand className="fs-3 p-0">
+             GITHUB USERS API
             </Navbar.Brand>          
         </Container>
       </Navbar>
