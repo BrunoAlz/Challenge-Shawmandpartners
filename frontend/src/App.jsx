@@ -2,6 +2,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import UsersList from "./pages/UsersList";
+import UserDetails from "./pages/UserDetails";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
@@ -15,6 +16,7 @@ function App() {
         <Container>
           <Routes>
             <Route path="/" element={<UsersList />} />
+            <Route path="/" element={<UserDetails />} />
           </Routes>
         </Container>
       </main>
