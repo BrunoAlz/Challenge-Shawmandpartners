@@ -42,7 +42,12 @@ const getUserDetail = async (req, res) => {
     const { username } = req.params;
 
     const response = await axios.get(
-      `https://api.github.com/users/${username}`
+      `https://api.github.com/users/${username}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
 
     res.json(response.data);
@@ -57,7 +62,12 @@ const getUserRepos = async (req, res) => {
     const { username } = req.params;
 
     const response = await axios.get(
-      `https://api.github.com/users/${username}/repos`
+      `https://api.github.com/users/${username}/repos`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
 
     res.json(response.data);
