@@ -3,24 +3,44 @@ import DateComponent from "./DateComponent";
 
 function ConditionalRenderer({ loading, error, user }) {
   if (loading) {
-    return <>Carregando...</>;
+    return <h1>Loading...</h1>;
   }
 
   if (error) {
-    return <>Erro ao carregar os dados.</>;
+    return (
+      <>
+        <h1 className="text-danger">User does not exist</h1>
+        <Link to="/" className="btn btn-danger my-3">
+          back
+        </Link>
+      </>
+    );
   }
 
   return (
     <>
-      <h1 className="fs-1">Login: {user.login}</h1>
-      <h1>User ID: {user.id}</h1>
+      <h1 className="text-secondary">Login: </h1>
+      <h1>{user.login}</h1>
+      <hr />
+      <h1 className="text-secondary">User ID: </h1>
+      <h1>{user.id}</h1>
+      <hr />
+      <h1 className="text-secondary">Profile URL: </h1>
       <h1>
-        Profile URL: <Link to={user.url}>{user.url}</Link>
+        <Link to={user.url}>{user.url}</Link>
       </h1>
+      <hr />
+      <h1 className="text-secondary">Date of the login creation: </h1>
       <h1>
-        Date of the login creation:
         <DateComponent date={user.created_at} />
       </h1>
+      <hr />
+      <Link to="/" className="btn btn-danger my-3">
+        back
+      </Link>
+      <Link to="/" className="btn btn-success mx-4 fs-4">
+        REPOSITORIES
+      </Link>
     </>
   );
 }
