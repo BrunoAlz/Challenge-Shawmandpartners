@@ -22,9 +22,22 @@ const getUserProfileDetails = async (username) => {
   }
 };
 
+// get user Profile details
+const getUserProfileRepos = async (username) => {
+  try {
+    const response = await axios.get(`${endpoint}/${username}/repos`);
+    console.log(response.data);
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+
 const userService = {
   getUsers,
   getUserProfileDetails,
+  getUserProfileRepos,
 };
 
 export default userService;

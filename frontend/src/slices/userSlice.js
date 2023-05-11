@@ -4,6 +4,7 @@ import userService from "../services/userService";
 const initialState = {
   data: [],
   user: {},
+  repos: [],
   error: false,
   success: false,
   loading: false,
@@ -16,8 +17,7 @@ export const getUsers = createAsyncThunk(
     if (data.data) {
       return thunkAPI.fulfillWithValue(data.data.users);
     } else {
-      const message = data;
-      return thunkAPI.rejectWithValue(message);
+      return thunkAPI.rejectWithValue(data.response.data.error);
     }
   }
 );
@@ -27,6 +27,20 @@ export const getUserProfileDetails = createAsyncThunk(
   "user/details",
   async (username, thunkAPI) => {
     const data = await userService.getUserProfileDetails(username);
+
+    if (data.data) {
+      return thunkAPI.fulfillWithValue(data.data);
+    } else {
+      return thunkAPI.rejectWithValue(data.response.data.error);
+    }
+  }
+);
+
+//  get userProfile Details
+export const getUserProfileRepos = createAsyncThunk(
+  "user/details",
+  async (username, thunkAPI) => {
+    const data = await userService.getUserProfileRepos(username);
 
     if (data.data) {
       return thunkAPI.fulfillWithValue(data.data);
