@@ -33,7 +33,26 @@ const getUserDetail = async (req, res) => {
   }
 };
 
+// Controller for user Repos
+const getUserRepos = async (req, res) => {
+  try {
+    const { username } = req.params;
+
+    const response = await axios.get(
+      `https://api.github.com/users/${username}/repos`
+    );
+
+    res.json(response.data);
+    console.log(response)
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({ error: "Error user does not exist" });
+  }
+};
+
+
 module.exports = {
   getUsers,
   getUserDetail,
+  getUserRepos,
 };
