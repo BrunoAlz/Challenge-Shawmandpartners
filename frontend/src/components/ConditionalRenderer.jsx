@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import DateComponent from "./DateComponent";
+import { Row, Col } from "react-bootstrap";
 
 const ConditionalRenderer = ({ loading, error, user }) => {
   if (loading) {
@@ -19,28 +20,29 @@ const ConditionalRenderer = ({ loading, error, user }) => {
 
   return (
     <>
-      <h1 className="text-secondary">Login: </h1>
-      <h1>{user.login}</h1>
-      <hr />
-      <h1 className="text-secondary">User ID: </h1>
-      <h1>{user.id}</h1>
-      <hr />
-      <h1 className="text-secondary">Profile URL: </h1>
-      <h1>
-        <Link to={user.url}>{user.url}</Link>
-      </h1>
-      <hr />
-      <h1 className="text-secondary">Date of the login creation: </h1>
-      <h1>
-        <DateComponent date={user.created_at} />
-      </h1>
-      <hr />
-      <Link to="/" className="btn btn-danger my-3">
-        back
-      </Link>
-      <Link to="/" className="btn btn-success mx-4 fs-4">
-        REPOSITORIES
-      </Link>
+      <Row>
+        <Col md={5} sm={12}>
+          <h5 className="text-secondary">Login: </h5>
+          <h5>{user.login}</h5>
+          <hr />
+          <h5 className="text-secondary">User ID: </h5>
+          <h5>{user.id}</h5>
+          <hr />
+          <h5 className="text-secondary">Profile URL: </h5>
+          <h5>
+            <Link to={user.url}>{user.url}</Link>
+          </h5>
+          <hr />
+          <h5 className="text-secondary">Date of the login creation: </h5>
+          <h5>
+            <DateComponent date={user.created_at} />
+          </h5>
+          <hr />
+          <Link to="/" className="btn btn-danger my-3">
+            back
+          </Link>
+        </Col>
+      </Row>
     </>
   );
 };

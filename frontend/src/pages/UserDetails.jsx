@@ -16,7 +16,7 @@ const UserDetails = () => {
   }, []);
 
   return (
-    <div className="text-center mt-5">
+    <div className="mt-5">
       <ConditionalRenderer loading={loading} error={error} user={user} />
     </div>
   );
