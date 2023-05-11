@@ -1,18 +1,32 @@
 const axios = require("axios");
+const { parseLinkHeader } = require("../utils/pagination");
 
 // Controller for listing users
 const getUsers = async (req, res) => {
   try {
     const { since } = req.query;
+    const perPage = 10;
 
     const response = await axios.get(
-      `https://api.github.com/users?since=${since}`
+      `https://api.github.com/users?since=${since}&per_page=${perPage}`
     );
 
-    res.json(response.data);
+    console.log(response.headers);
+    const linkHeader = response.headers.link;
+    const parsedLinks = parseLinkHeader(linkHeader);
+
+    res.json({
+      users: response.data,
+      pagination: {
+        nextPage: parsedLinks.next,
+        prevPage: parsedLinks.prev,
+        firstPage: parsedLinks.first,
+        lastPage: parsedLinks.last,
+      },
+    });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: "Error getting list of users" });
+    console.error(error);
+    res.status(500).json({ error: "Error while connecting to the server" });
   }
 };
 
@@ -26,9 +40,7 @@ const getUserDetail = async (req, res) => {
     );
 
     res.json(response.data);
-    console.log(response)
   } catch (error) {
-    console.log(error);
     res.status(404).json({ error: "Error user does not exist" });
   }
 };
@@ -43,13 +55,10 @@ const getUserRepos = async (req, res) => {
     );
 
     res.json(response.data);
-    console.log(response)
   } catch (error) {
-    console.log(error);
     res.status(404).json({ error: "Error user does not exist" });
   }
 };
-
 
 module.exports = {
   getUsers,
