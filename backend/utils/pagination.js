@@ -36,18 +36,18 @@ const extractSinceFromLink = (link) => {
   return null;
 };
 
-const getNextPageLinkForRepos = (linkHeader) => {
-  if (!linkHeader) {
+const extractPageNumberFromLink = (linkHeader, rel) => {
+  if (!linkHeader || !rel) {
     return null;
   }
 
   const links = linkHeader.split(", ");
-  const nextPageLink = links.find((link) => link.includes('rel="next"'));
-  if (!nextPageLink) {
+  const targetLink = links.find((link) => link.includes(`rel="${rel}"`));
+  if (!targetLink) {
     return null;
   }
 
-  const match = nextPageLink.match(/<([^>]+)>/);
+  const match = targetLink.match(/page=(\d+)/);
   if (!match) {
     return null;
   }
@@ -55,8 +55,17 @@ const getNextPageLinkForRepos = (linkHeader) => {
   return match[1];
 };
 
+const getNextPageNumberForRepos = (linkHeader) => {
+  return extractPageNumberFromLink(linkHeader, "next");
+};
+
+const getLastPageNumberForRepos = (linkHeader) => {
+  return extractPageNumberFromLink(linkHeader, "last");
+};
+
 module.exports = {
   parseNextLink,
   extractSinceFromLink,
-  getNextPageLinkForRepos,
+  getNextPageNumberForRepos,
+  getLastPageNumberForRepos,
 };

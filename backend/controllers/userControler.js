@@ -2,7 +2,8 @@ const axios = require("axios");
 const {
   parseNextLink,
   extractSinceFromLink,
-  getNextPageLinkForRepos,
+  getNextPageNumberForRepos,
+  getLastPageNumberForRepos,
 } = require("../utils/pagination");
 require("dotenv").config();
 const token = process.env.TOKEN;
@@ -72,11 +73,13 @@ const getUserRepos = async (req, res) => {
     );
 
     const linkHeader = response.headers.link;
-    const nextPageLink = getNextPageLinkForRepos(linkHeader);
+    const nextPageLink = getNextPageNumberForRepos(linkHeader);
+    const lastPageLink = getLastPageNumberForRepos(linkHeader);
 
     res.json({
       repos: response.data,
       nextPage: nextPageLink,
+      lastPage: lastPageLink,
     });
   } catch (error) {
     res.status(404).json({ error: "Error user does not exist" });
