@@ -14,12 +14,12 @@ const LoadingError = ({ loading, error }) => {
 
   if (error) {
     return (
-      <>
-        <h1 className="text-danger text-center">User does not exist</h1>
-        <Link to="/" className="btn btn-danger my-3">
+      <div className="text-center mt-5">
+        <h1 className="text-danger">User does not exist</h1>
+        <Link to="/" className="btn btn-primary my-3">
           Back to Homepage
         </Link>
-      </>
+      </div>
     );
   }
 

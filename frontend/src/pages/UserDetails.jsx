@@ -22,7 +22,7 @@ const UserDetails = () => {
     if (success) {
       dispatch(getUserProfileRepos(username));
     }
-  }, [dispatch, username]);
+  }, [dispatch, username, success]);
 
   return (
     <div>
