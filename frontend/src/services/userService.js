@@ -2,9 +2,9 @@ import axios from "axios";
 const endpoint = "http://localhost:3000/api/users";
 
 // get users data
-const getUsers = async () => {
+const getUsers = async (since) => {
   try {
-    const response = await axios.get(endpoint);
+    const response = await axios.get(`${endpoint}?since=${since}`);
     return response;
   } catch (error) {
     return error;

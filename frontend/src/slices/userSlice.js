@@ -8,16 +8,17 @@ const initialState = {
   error: false,
   success: false,
   loading: false,
+  since: null,
 };
 
 export const getUsers = createAsyncThunk(
   "users/listAll",
-  async (_, thunkAPI) => {
-    const data = await userService.getUsers();
-    if (data.data) {
-      return thunkAPI.fulfillWithValue(data.data.users);
-    } else {
-      return thunkAPI.rejectWithValue(data.response.data.error);
+  async (since, thunkAPI) => {
+    try {
+      const data = await userService.getUsers(since);
+      return data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue("Error while fetching users");
     }
   }
 );
@@ -36,20 +37,6 @@ export const getUserProfileDetails = createAsyncThunk(
   }
 );
 
-// //  get userProfile Details
-// export const getUserProfileRepos = createAsyncThunk(
-//   "user/details",
-//   async (username, thunkAPI) => {
-//     const data = await userService.getUserProfileRepos(username);
-
-//     if (data.data) {
-//       return thunkAPI.fulfillWithValue(data.data);
-//     } else {
-//       return thunkAPI.rejectWithValue(data.response.data.error);
-//     }
-//   }
-// );
-
 export const userSlice = createSlice({
   name: "users",
   initialState,
@@ -62,14 +49,17 @@ export const userSlice = createSlice({
       })
       .addCase(getUsers.fulfilled, (state, action) => {
         state.loading = false;
+        state.error = false;
         state.success = true;
-        state.data = action.payload;
-        state.repos = [];
-        state.user = {};
+        state.data = action.payload.users;
+        state.since = action.payload.since;
       })
       .addCase(getUsers.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+        state.success = false;
+        state.data = [];
+        state.since = null;
       })
       .addCase(getUserProfileDetails.pending, (state) => {
         state.loading = true;
