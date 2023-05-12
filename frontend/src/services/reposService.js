@@ -5,7 +5,6 @@ const endpoint = "http://localhost:3000/api/users";
 const getUserProfileRepos = async (username) => {
   try {
     const response = await axios.get(`${endpoint}/${username}/repos`);
-    console.log(response.data);
     return response;
   } catch (error) {
     return error;

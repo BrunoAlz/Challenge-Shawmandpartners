@@ -15,24 +15,21 @@ const getUsers = async () => {
 const getUserProfileDetails = async (username) => {
   try {
     const response = await axios.get(`${endpoint}/${username}/details`);
-    console.log(response.data);
     return response;
   } catch (error) {
     return error;
   }
 };
 
-// get user Profile details
+// get user Profile Repos
 const getUserProfileRepos = async (username) => {
   try {
     const response = await axios.get(`${endpoint}/${username}/repos`);
-    console.log(response.data);
     return response;
   } catch (error) {
     return error;
   }
 };
-
 
 const userService = {
   getUsers,
