@@ -3,10 +3,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import UsersList from "./pages/UsersList";
 import UserDetails from "./pages/UserDetails";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import Header from "./components/layout/Header";
+import Footer from "./components/layout/Footer";
 
 import { Container } from "react-bootstrap";
+import NotFound404 from "./pages/NotFound404";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Routes>
             <Route path="/" element={<UsersList />} />
             <Route path="/:username" element={<UserDetails />} />
+            <Route path="*" element={<NotFound404 />} />
           </Routes>
         </Container>
       </main>

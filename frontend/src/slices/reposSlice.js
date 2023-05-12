@@ -8,7 +8,7 @@ const initialState = {
   loading: false,
 };
 
-//  get userProfile Details
+//  get user Repos
 export const getUserProfileRepos = createAsyncThunk(
   "user/repos",
   async (username, thunkAPI) => {
@@ -40,7 +40,7 @@ export const reposSlice = createSlice({
       })
       .addCase(getUserProfileRepos.rejected, (state) => {
         state.loading = false;
-        state.error = false;
+        state.error = true;
         state.repos = [];
       });
   },

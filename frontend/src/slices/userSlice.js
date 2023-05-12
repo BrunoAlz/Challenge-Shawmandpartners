@@ -62,7 +62,10 @@ export const userSlice = createSlice({
       })
       .addCase(getUsers.fulfilled, (state, action) => {
         state.loading = false;
+        state.success = true;
         state.data = action.payload;
+        state.repos = [];
+        state.user = {};
       })
       .addCase(getUsers.rejected, (state, action) => {
         state.loading = false;
@@ -80,6 +83,7 @@ export const userSlice = createSlice({
       })
       .addCase(getUserProfileDetails.rejected, (state, action) => {
         state.loading = false;
+        state.success = false;
         state.error = action.payload;
         state.user = {};
       });

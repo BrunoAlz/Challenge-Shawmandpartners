@@ -5,7 +5,7 @@ import { getUsers } from "../slices/userSlice";
 
 import { Row } from "react-bootstrap";
 
-import UserCard from "../components/UserCard";
+import UserCard from "../components/UsersListCard";
 
 const UsersList = () => {
   const { data, error, success, loading } = useSelector((state) => state.user);

@@ -1,38 +1,24 @@
 import { Link } from "react-router-dom";
-import DateComponent from "./DateComponent";
+import DateComponent from "./utils/DateComponent";
 import Card from "react-bootstrap/Card";
-import Spinner from "react-bootstrap/Spinner";
 
-const ConditionalRenderer = ({ loading, error, user }) => {
-  if (loading) {
-    return (
-      <Spinner className="" animation="border" role="status">
-        <span className="visually-hidden">Loading...</span>
-      </Spinner>
-    );
-  }
-
-  if (error) {
-    return (
-      <>
-        <h1 className="text-danger">User does not exist</h1>
-        <Link to="/" className="btn btn-danger my-3">
-          back
-        </Link>
-      </>
-    );
-  }
-
+const UserDetailsCard = ({ user }) => {
   return (
     <>
       <Card className="">
         <Card.Body>
+          <h4 className="text-center mb-3">User Details</h4>
+          <span className="text-secondary text-center">ID: </span>
           <h1 className="border border-radius border-3 text-center">
             {user.id}
           </h1>
-          <p className="fs-3 mt-3 text-center">{user.login}</p>
+          <span className="text-secondary text-center">Login: </span>
+          <p className="fs-3 text-center">{user.login}</p>
+          <span className="text-secondary text-center">Profile URL: </span>
           <p className="fs-6 text-center">
-            <Link to={user.html_url}>{user.html_url}</Link>
+            <Link target="_blank" to={user.html_url}>
+              {user.html_url}
+            </Link>
           </p>
           <hr />
           <p className="text-secondary text-center">
@@ -51,4 +37,4 @@ const ConditionalRenderer = ({ loading, error, user }) => {
   );
 };
 
-export default ConditionalRenderer;
+export default UserDetailsCard;
