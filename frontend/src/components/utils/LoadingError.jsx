@@ -16,7 +16,7 @@ const LoadingError = ({ loading, error }) => {
     return (
       <div className="text-center mt-5">
         <h1 className="text-danger">User does not exist</h1>
-        <Link to="/" className="btn btn-primary my-3">
+        <Link to="/users" className="btn btn-primary my-3">
           Back to Homepage
         </Link>
       </div>

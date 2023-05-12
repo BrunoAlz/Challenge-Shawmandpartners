@@ -7,7 +7,7 @@ const UserCard = ({ data }) => {
     <>
       {data.map((user) => (
         <Col key={user.id} sm={12} md={6} lg={4} xl={3}>
-          <Link to={`/${user.login}`} className="text-decoration-none">
+          <Link to={`/users/${user.login}/details`} className="text-decoration-none">
             <Card className="mt-4" style={{ width: "18rem" }}>
               <Card.Body>
                 <Card.Title className="text-center fs-4">

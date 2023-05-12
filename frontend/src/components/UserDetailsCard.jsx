@@ -28,7 +28,7 @@ const UserDetailsCard = ({ user }) => {
             <DateComponent date={user.created_at} />
           </p>
           <hr />
-          <Link to="/" className="btn btn-primary w-100 my-3">
+          <Link to="/users" className="btn btn-primary w-100 my-3">
             back
           </Link>
         </Card.Body>
