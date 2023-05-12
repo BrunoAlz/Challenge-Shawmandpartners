@@ -6,7 +6,6 @@ const initialState = {
   error: false,
   success: false,
   loading: false,
-  page: null,
   nextPage: null,
   lastPage: null,
 };
@@ -39,7 +38,6 @@ export const reposSlice = createSlice({
         state.success = true;
         state.error = false;
         state.repos = action.payload.repos;
-        state.page = action.payload.nextPage - 1;
         state.nextPage = action.payload.nextPage;
         state.lastPage = action.payload.lastPage;
       })

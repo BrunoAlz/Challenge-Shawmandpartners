@@ -2,15 +2,16 @@ import Table from "react-bootstrap/Table";
 import { Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import LoadingError from "./utils/LoadingError";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserProfileRepos } from "../slices/reposSlice";
 
 const ReposTable = () => {
+  const [page, setPage] = useState(1);
+
   const {
     repos,
     loading: repoLoading,
-    page,
     nextPage,
     lastPage,
   } = useSelector((state) => state.repos);
@@ -20,18 +21,22 @@ const ReposTable = () => {
 
   const handleFirstPage = () => {
     dispatch(getUserProfileRepos({ username: user.login, page: 1 }));
+    setPage(1);
   };
 
   const handleNextPage = () => {
     dispatch(getUserProfileRepos({ username: user.login, page: nextPage }));
+    setPage(page + 1);
   };
 
   const handlePrevPage = () => {
     dispatch(getUserProfileRepos({ username: user.login, page: nextPage - 2 }));
+    setPage(page - 1);
   };
 
   const handleLastPage = () => {
     dispatch(getUserProfileRepos({ username: user.login, page: lastPage }));
+    setPage(lastPage);
   };
 
   useEffect(() => {
@@ -71,7 +76,12 @@ const ReposTable = () => {
                 </Table>
               </Card.Body>
               <Card.Footer>
-                <div className="d-flex justify-content-center mt-4">
+                <div className="text-center">
+                  <span className="">
+                    {lastPage
+                      ? `Page ${page} from ${lastPage}`
+                      : `Last page ${page}`}
+                  </span>
                   <Button
                     variant="primary"
                     className="ms-2"
@@ -88,20 +98,24 @@ const ReposTable = () => {
                       Prev
                     </Button>
                   )}
-                  <Button
-                    variant="primary"
-                    className="ms-2"
-                    onClick={handleNextPage}
-                  >
-                    Next
-                  </Button>
-                  <Button
-                    variant="primary"
-                    className="ms-2"
-                    onClick={handleLastPage}
-                  >
-                    Last
-                  </Button>
+                  {lastPage && (
+                    <Button
+                      variant="primary"
+                      className="ms-2"
+                      onClick={handleNextPage}
+                    >
+                      Next
+                    </Button>
+                  )}
+                  {lastPage && (
+                    <Button
+                      variant="primary"
+                      className="ms-2"
+                      onClick={handleLastPage}
+                    >
+                      Last
+                    </Button>
+                  )}
                 </div>
               </Card.Footer>
             </Card>
