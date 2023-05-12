@@ -1,18 +1,34 @@
-const parseLinkHeader = (linkHeader) => {
+const parseNextLink = (linkHeader) => {
+  if (!linkHeader) {
+    return null;
+  }
+
   const links = linkHeader.split(", ");
-  const parsedLinks = {};
+  const nextPageLink = links.find((link) => link.includes('rel="next"'));
+  const prevPageLink = links.find((link) => link.includes('rel="prev"'));
+  console.log(links);
+  if (!nextPageLink) {
+    return null;
+  }
 
-  links.forEach((link) => {
-    const [url, rel] = link.split("; ");
-    const [, path] = url.match(/<([^>]+)>/);
-    const [, relType] = rel.match(/"([^"]+)"/);
+  const match = nextPageLink.match(/<([^>]+)>/);
+  if (!match) {
+    return null;
+  }
 
-    parsedLinks[relType] = path;
-  });
+  return match[1];
+};
 
-  return parsedLinks;
+const extractSinceFromLink = (link) => {
+  if (!link) {
+    return null;
+  }
+
+  const params = new URLSearchParams(new URL(link).search);
+  return params.get("since");
 };
 
 module.exports = {
-  parseLinkHeader,
+  parseNextLink,
+  extractSinceFromLink,
 };

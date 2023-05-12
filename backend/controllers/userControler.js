@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { parseLinkHeader } = require("../utils/pagination");
+const { parseNextLink, extractSinceFromLink } = require("../utils/pagination");
 require("dotenv").config();
 const token = process.env.TOKEN;
 
@@ -7,7 +7,7 @@ const token = process.env.TOKEN;
 const getUsers = async (req, res) => {
   try {
     const { since } = req.query;
-    const perPage = 10;
+    const perPage = 20;
 
     const response = await axios.get(
       `https://api.github.com/users?since=${since}&per_page=${perPage}`,
@@ -18,17 +18,12 @@ const getUsers = async (req, res) => {
       }
     );
 
-    const linkHeader = response.headers.link;
-    const parsedLinks = parseLinkHeader(linkHeader);
+    const nextPageLink = parseNextLink(response.headers.link);
+    const nextSince = extractSinceFromLink(nextPageLink);
 
     res.json({
       users: response.data,
-      pagination: {
-        nextPage: parsedLinks.next,
-        prevPage: parsedLinks.prev,
-        firstPage: parsedLinks.first,
-        lastPage: parsedLinks.last,
-      },
+      since: nextSince,
     });
   } catch (error) {
     console.error(error);
