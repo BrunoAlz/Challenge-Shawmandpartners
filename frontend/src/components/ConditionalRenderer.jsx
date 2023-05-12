@@ -1,10 +1,15 @@
 import { Link } from "react-router-dom";
 import DateComponent from "./DateComponent";
-import { Col } from "react-bootstrap";
+import Card from "react-bootstrap/Card";
+import Spinner from "react-bootstrap/Spinner";
 
 const ConditionalRenderer = ({ loading, error, user }) => {
   if (loading) {
-    return <h1>Loading...</h1>;
+    return (
+      <Spinner className="" animation="border" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </Spinner>
+    );
   }
 
   if (error) {
@@ -20,25 +25,28 @@ const ConditionalRenderer = ({ loading, error, user }) => {
 
   return (
     <>
-      <h5 className="text-secondary">Login: </h5>
-      <h5>{user.login}</h5>
-      <hr />
-      <h5 className="text-secondary">User ID: </h5>
-      <h5>{user.id}</h5>
-      <hr />
-      <h5 className="text-secondary">Profile URL: </h5>
-      <h5>
-        <Link to={user.url}>{user.url}</Link>
-      </h5>
-      <hr />
-      <h5 className="text-secondary">Date of the login creation: </h5>
-      <h5>
-        <DateComponent date={user.created_at} />
-      </h5>
-      <hr />
-      <Link to="/" className="btn btn-danger my-3">
-        back
-      </Link>
+      <Card className="">
+        <Card.Body>
+          <h1 className="border border-radius border-3 text-center">
+            {user.id}
+          </h1>
+          <p className="fs-3 mt-3 text-center">{user.login}</p>
+          <p className="fs-6 text-center">
+            <Link to={user.html_url}>{user.html_url}</Link>
+          </p>
+          <hr />
+          <p className="text-secondary text-center">
+            Date of the login creation:{" "}
+          </p>
+          <p className="text-center">
+            <DateComponent date={user.created_at} />
+          </p>
+          <hr />
+          <Link to="/" className="btn btn-primary w-100 my-3">
+            back
+          </Link>
+        </Card.Body>
+      </Card>
     </>
   );
 };

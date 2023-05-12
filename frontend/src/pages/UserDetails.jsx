@@ -21,12 +21,12 @@ const UserDetails = () => {
   }, [dispatch, username]);
 
   return (
-    <div className="mt-5">
+    <div>
       <Row>
-        <Col xxl={4} xl={4} lg={5} md={5} sm={12}>
+        <Col xxl={4} xl={4} lg={5} md={5} sm={12} className="mt-4">
           <ConditionalRenderer loading={loading} error={error} user={user} />
         </Col>
-        <Col xxl={8} xl={8} lg={7} md={7} sm={12}>
+        <Col xxl={8} xl={8} lg={7} md={7} sm={12} className="mt-4">
           <ReposTable repos={repos} />
         </Col>
       </Row>
