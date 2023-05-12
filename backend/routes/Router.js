@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express();
-
-router.use("/api", require("./userRoutes"));
+const routes = require("./userRoutes");
+router.use("/api", routes);
 
 router.get("/", (req, res) => {
   res.send("Server working correctly");

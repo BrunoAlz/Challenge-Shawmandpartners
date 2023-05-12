@@ -1,9 +1,43 @@
 import Table from "react-bootstrap/Table";
-import { Card } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import LoadingError from "./utils/LoadingError";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getUserProfileRepos } from "../slices/reposSlice";
 
-const ReposTable = ({ repos, repoLoading }) => {
+const ReposTable = () => {
+  const {
+    repos,
+    loading: repoLoading,
+    page,
+    nextPage,
+    lastPage,
+  } = useSelector((state) => state.repos);
+  const { user } = useSelector((state) => state.user);
+
+  const dispatch = useDispatch();
+
+  const handleFirstPage = () => {
+    dispatch(getUserProfileRepos({ username: user.login, page: 1 }));
+  };
+
+  const handleNextPage = () => {
+    dispatch(getUserProfileRepos({ username: user.login, page: nextPage }));
+  };
+
+  const handlePrevPage = () => {
+    dispatch(getUserProfileRepos({ username: user.login, page: nextPage - 2 }));
+  };
+
+  const handleLastPage = () => {
+    dispatch(getUserProfileRepos({ username: user.login, page: lastPage }));
+  };
+
+  useEffect(() => {
+    dispatch(getUserProfileRepos({ username: user.login, page: null }));
+  }, [dispatch]);
+
   return (
     <>
       {repoLoading ? (
@@ -36,6 +70,40 @@ const ReposTable = ({ repos, repoLoading }) => {
                   </tbody>
                 </Table>
               </Card.Body>
+              <Card.Footer>
+                <div className="d-flex justify-content-center mt-4">
+                  <Button
+                    variant="primary"
+                    className="ms-2"
+                    onClick={handleFirstPage}
+                  >
+                    First
+                  </Button>
+                  {page > 1 && (
+                    <Button
+                      variant="primary"
+                      className="ms-2"
+                      onClick={handlePrevPage}
+                    >
+                      Prev
+                    </Button>
+                  )}
+                  <Button
+                    variant="primary"
+                    className="ms-2"
+                    onClick={handleNextPage}
+                  >
+                    Next
+                  </Button>
+                  <Button
+                    variant="primary"
+                    className="ms-2"
+                    onClick={handleLastPage}
+                  >
+                    Last
+                  </Button>
+                </div>
+              </Card.Footer>
             </Card>
           ) : (
             <h1 className="text-center text-danger">

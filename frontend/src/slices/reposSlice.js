@@ -6,7 +6,7 @@ const initialState = {
   error: false,
   success: false,
   loading: false,
-  page: 1,
+  page: null,
   nextPage: null,
   lastPage: null,
 };
@@ -14,8 +14,8 @@ const initialState = {
 //  get user Repos
 export const getUserProfileRepos = createAsyncThunk(
   "user/repos",
-  async (username, thunkAPI) => {
-    const data = await reposService.getUserProfileRepos(username);
+  async ({ username, page } = username, thunkAPI) => {
+    const data = await reposService.getUserProfileRepos(username, page);
     if (data) {
       return thunkAPI.fulfillWithValue(data);
     } else {
@@ -39,10 +39,9 @@ export const reposSlice = createSlice({
         state.success = true;
         state.error = false;
         state.repos = action.payload.repos;
+        state.page = action.payload.nextPage - 1;
         state.nextPage = action.payload.nextPage;
         state.lastPage = action.payload.lastPage;
-        console.log(state.lastPage);
-
       })
       .addCase(getUserProfileRepos.rejected, (state) => {
         state.loading = false;

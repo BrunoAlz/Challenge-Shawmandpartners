@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserProfileDetails } from "../slices/userSlice";
-import { getUserProfileRepos } from "../slices/reposSlice";
 import UserDetailsCard from "../components/UserDetailsCard";
 import { Col, Row } from "react-bootstrap";
 import ReposTable from "../components/ReposTable";
@@ -12,16 +11,12 @@ const UserDetails = () => {
   const { username } = useParams();
 
   const { user, error, loading, success } = useSelector((state) => state.user);
-  const { repos, loading: repoLoading } = useSelector((state) => state.repos);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getUserProfileDetails(username));
 
-    if (success) {
-      dispatch(getUserProfileRepos(username));
-    }
   }, [dispatch, username, success]);
 
   return (
@@ -34,7 +29,7 @@ const UserDetails = () => {
               <UserDetailsCard user={user} />
             </Col>
             <Col xxl={8} xl={8} lg={7} md={7} sm={12} className="mt-4">
-              <ReposTable repos={repos} repoLoading={repoLoading} />
+              <ReposTable />
             </Col>
           </>
         )}
